@@ -13,7 +13,6 @@ typedef struct aluno{
 }Aluno;
 
 typedef struct listaAluno{
-    Aluno *aluno;
-
+    Aluno aluno;
     struct listaAluno* prox;
 }ListaAluno;

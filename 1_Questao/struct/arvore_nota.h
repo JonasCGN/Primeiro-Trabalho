@@ -1,9 +1,14 @@
 #pragma once
 
-typedef struct arvoreNota{
+typedef struct info{
     int codDisciplina;
     int semestreCursado;
     float nota;
+}Info;
+
+
+typedef struct arvoreNota{
+    Info info;
 
     struct arvoreNota* esq; 
     struct arvoreNota* dir; 
