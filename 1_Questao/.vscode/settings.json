@@ -8,6 +8,7 @@
         "arvore_curso.h": "c",
         "disciplina.h": "c",
         "curso.h": "c",
-        "lista_aluno.h": "c"
+        "lista_aluno.h": "c",
+        "stdlib.h": "c"
     }
 }

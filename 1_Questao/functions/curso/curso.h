@@ -14,4 +14,4 @@ void mostrarTodosCursos(ArvoreCurso *arvoreCurso);
 // Ele verifica se o curso existe
 int verificaCurso(ArvoreCurso *arvoreCurso, int codCurso);
 //Retorna o curso encontrado
-ArvoreCurso *retornaCursoCod(ArvoreCurso *arvoreCurso,int cod);
+ArvoreCurso *retornaCursoCod(ArvoreCurso *arvoreCurso,int codCurso);

@@ -20,6 +20,7 @@ void cadastrarAluno(ListaAluno **listaAluno, ArvoreCurso *arvoreCurso){
     scanf("%d", &(aluno.matricula));
 
     aluno.nota = NULL;
+    aluno.matriculaDisciplina = NULL;
 
     insereAluno(aluno,listaAluno);       
 }
@@ -45,15 +46,15 @@ void mostrarAlunoCurso(ListaAluno *listaAluno){
     alunoCurso(listaAluno,cod);
 }
 
-Aluno alunoMatricula(ArvoreDisciplina *arvoreDisciplina, int matricula){
+void alunoMatriculaInfo(ArvoreDisciplina *arvoreDisciplina, ArvoreMatricula *arvoreMatricula){
     if(arvoreDisciplina != NULL){
         
-        if(arvoreDisciplina->disciplina.codDisciplina == matricula){
-            exibirInfoDisciplina(arvoreDisciplina->disciplina);
+        if(arvoreDisciplina->disciplina.codDisciplina == arvoreMatricula->codDisciplina){
+            mostrarInfoDisciplina(arvoreDisciplina, arvoreMatricula->codDisciplina);
         }
 
-        alunoMatricula(arvoreDisciplina->esq,matricula);
-        alunoMatricula(arvoreDisciplina->dir,matricula);
+        alunoMatricula(arvoreDisciplina,arvoreMatricula->esq);
+        alunoMatricula(arvoreDisciplina,arvoreMatricula->dir);
     }
 }
 
@@ -61,5 +62,43 @@ void mostrarDisciplinaAluno(ArvoreCurso *arvoreCurso,Aluno aluno){
     ArvoreCurso *curso;
     curso = retornaCursoCod(arvoreCurso,aluno.codigoCurso);
 
-    alunoMatricula(curso->disciplina,aluno.matricula);
+    alunoMatriculaInfo(curso->disciplina,aluno.matriculaDisciplina);
+}
+
+Aluno *alunoMatricula(ListaAluno *listaAluno, int matricula){
+    Aluno *aluno = NULL;
+
+    if(listaAluno != NULL){
+        if(listaAluno->aluno.matricula == matricula){
+            aluno = &(listaAluno->aluno);
+        }else{
+            aluno = alunoMatricula(listaAluno->prox,matricula);
+        }
+    }
+
+    return aluno;
+}
+
+void historicoAluno(ArvoreCurso *arvoreCurso,Aluno aluno){
+    ArvoreCurso *cursoAluno = retornaCursoCod(arvoreCurso,aluno.codigoCurso);
+    Curso curso = cursoAluno->curso;
+
+    printf("Nome Curso: %s\n",curso.nomeCurso);
+    for(int i=0;i <= cursoAluno->curso.quantPeriodo;i++){
+        printf("------------Periodo %d------------\n", i);
+        mostrarInfoNotaDisciplina(aluno.nota,cursoAluno->disciplina,i);
+        mostrarDisciplinaAluno(cursoAluno,aluno);
+        printf("----------------------------------\n");
+    }
+}
+
+void mostrarInfoNotaDisciplina(ArvoreNota *arvoreNota,ArvoreDisciplina *arvoreDisciplina,int periodo){
+    if(arvoreNota != NULL){
+        if(arvoreDisciplina->disciplina.periodo == periodo){
+            exibirNotaMatricula(arvoreNota,arvoreDisciplina->disciplina.codDisciplina);
+        }
+
+        mostrarInfoNotaDisciplina(arvoreNota,arvoreDisciplina->esq,periodo);
+        mostrarInfoNotaDisciplina(arvoreNota,arvoreDisciplina->dir,periodo);
+    }
 }

@@ -27,22 +27,38 @@ void mostraInfoCurso(Curso curso){
 
 int verificaCurso(ArvoreCurso *arvoreCurso, int codCurso){
 
+    int exist = 0;
+
     if(arvoreCurso != NULL){
+
         if(arvoreCurso->curso.codCurso == codCurso){
-            return 1;
+            exist = 1;
+        }else{
+            exist = verificaCurso(arvoreCurso->esq,codCurso) || verificaCurso(arvoreCurso->dir,codCurso);
         }
-
-        verificaCurso(arvoreCurso->esq,codCurso);
-        verificaCurso(arvoreCurso->dir,codCurso);
-
     }
+
+    return exist;
 
 }
 
-ArvoreCurso *retornaCursoCod(ArvoreCurso *arvoreCurso,int cod){
+ArvoreCurso *retornaCursoCod(ArvoreCurso *arvoreCurso,int codCurso){
+    ArvoreCurso *exist= NULL;
+    exist = NULL;
 
-    return arvoreCurso;
-    
+    if(arvoreCurso != NULL){
+
+        if(arvoreCurso->curso.codCurso == codCurso){
+            exist = 1;
+        }else{
+            exist = verificaCurso(arvoreCurso->esq,codCurso);
+            if(!exist){
+                exist = verificaCurso(arvoreCurso->dir,codCurso);
+            }
+        }
+    }
+
+    return exist;
 }
 
 void mostrarTodosCursos(ArvoreCurso *arvoreCurso){

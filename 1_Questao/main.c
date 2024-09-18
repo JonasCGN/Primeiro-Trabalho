@@ -28,26 +28,29 @@ void inserirValor(No **no, int num){
     }
 }
 
-int verificaCurso(No *arvoreCurso, int codCurso){
+No* verificaCurso(No *arvoreCurso, int codCurso){
+    No* exist;
+    exist = NULL;
 
     if(arvoreCurso != NULL){
         if(arvoreCurso->num == codCurso){
-            return 1;
+            exist = arvoreCurso;
         }else{
-            verificaCurso(arvoreCurso->esq,codCurso);
-            verificaCurso(arvoreCurso->esq,codCurso);
+            exist = verificaCurso(arvoreCurso->esq,codCurso);
+
+            if(!exist){
+                exist = verificaCurso(arvoreCurso->dir,codCurso);
+            }
         }
-
-
     }
 
-    return 0;
+    return exist;
 }
 
 void exibirArvore(No *arvoreCurso){
     if(arvoreCurso != NULL){
         exibirArvore(arvoreCurso->esq);
-        printf("%d", arvoreCurso->num);
+        printf("%d ", arvoreCurso->num);
         exibirArvore(arvoreCurso->dir);
     }
 }
@@ -58,11 +61,17 @@ int main(){
 
     arvore = NULL;
 
+    inserirValor(&arvore,8);
+    inserirValor(&arvore,12);
+    inserirValor(&arvore,6);
+    inserirValor(&arvore,7);
     inserirValor(&arvore,10);
-    inserirValor(&arvore,11);
-    inserirValor(&arvore,9);
 
-    // printf("%d\n", verificaCurso(arvore,9));
+    int n=11;
+
+    if(verificaCurso(arvore,n)){
+        printf("%d\n", verificaCurso(arvore,n)->num);
+    }
 
     exibirArvore(arvore);
 

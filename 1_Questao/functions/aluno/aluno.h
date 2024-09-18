@@ -2,6 +2,7 @@
 
 #include "../curso/curso.h"
 #include "../lista/aluno/aluno.h"
+#include "../nota/nota.h"
 #include "../disciplina/disciplina.h"
 
 //Cadastra aluno
@@ -10,7 +11,13 @@ void cadastrarAluno(ListaAluno **listaAluno, ArvoreCurso *arvoreCurso);
 void alunoCurso(ListaAluno *listaAluno, int cod);
 //Mostrar todos os alunos de um determinado curso
 void mostrarAlunoCurso(ListaAluno *listaAluno);
-//Retorna o aluno com a respectiva matricula
-Aluno alunoMatricula(ArvoreDisciplina *arvoreDisciplina, int matricula);
+//Exibe o Aluno e suas disciplinas
+void alunoMatriculaInfo(ArvoreDisciplina *arvoreDisciplina, ArvoreMatricula *arvoreMatricula);
 //Mostrar todas as disciplinas que um determinado aluno está matriculado
 void mostrarDisciplinaAluno(ArvoreCurso *arvoreCurso, Aluno aluno);
+//Retorna o aluno com a respectiva matricula
+Aluno *alunoMatricula(ListaAluno *listaAluno, int matricula);
+//Mostar Informacao da Nota Apartir da Disciplina
+void mostrarInfoNotaDisciplina(ArvoreNota *arvoreNota,ArvoreDisciplina *arvoreDisciplina,int periodo);
+//Histórico do Aluno
+void historicoAluno(ArvoreCurso *arvoreCurso,Aluno aluno);

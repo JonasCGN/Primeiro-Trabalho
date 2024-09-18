@@ -13,3 +13,7 @@ void percorreArvoreDisciplina(ArvoreDisciplina *arvoreDisciplina);
 void mostrarDisciplinasCurso(ArvoreCurso *arvoreCurso, int cod);
 //Busca o curso e exibe todas as disciplinas
 void mostraDisciplinaPeriodoCurso(ArvoreCurso *arvoreCurso, int cod,int periodo);
+//Mostra informação de uma disciplina
+void mostrarInfoDisciplina(ArvoreDisciplina *arvoreDisciplina,int codDisciplina);
+//Verifica se a disciplina existe
+int verificaDisciplina(ArvoreDisciplina *arvoreDisciplina, int codDisciplina);
