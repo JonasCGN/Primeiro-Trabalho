@@ -78,12 +78,13 @@ ArvoreNota* inserirNota(ArvoreNota* raiz, int codDisciplina, float nota) {
 }
 
 ArvoreMatricula* removerDisciplinaMatricula(ArvoreMatricula* raiz, int codDisciplina) {
-    if (raiz != NULL) {  
+    if (raiz != NULL) {  // Alterado para if (raiz != NULL)
         if (codDisciplina < raiz->codDisciplina) {
             raiz->esq = removerDisciplinaMatricula(raiz->esq, codDisciplina);
         } else if (codDisciplina > raiz->codDisciplina) {
             raiz->dir = removerDisciplinaMatricula(raiz->dir, codDisciplina);
         } else {
+            // Caso em que encontramos a disciplina
             if (raiz->esq == NULL) {
                 ArvoreMatricula* temp = raiz->dir;
                 free(raiz);
@@ -94,14 +95,118 @@ ArvoreMatricula* removerDisciplinaMatricula(ArvoreMatricula* raiz, int codDiscip
                 return temp;
             }
 
-            ArvoreMatricula* temp = minValueNode(raiz->dir);
-            raiz->codDisciplina = temp->codDisciplina;
-            raiz->dir = removerDisciplinaMatricula(raiz->dir, temp->codDisciplina);
+            // Encontrar o menor valor na subárvore direita
+        
         }
     }
 
     return raiz;
 }
+void menu() {
+    int opcao;
+
+    do {
+        printf("\n======== MENU PRINCIPAL ========\n");
+        printf("1. Cadastrar Curso\n");
+        printf("2. Cadastrar Aluno\n");
+        printf("3. Cadastrar Disciplina\n");
+        printf("4. Cadastrar Matricula\n");
+        printf("5. Cadastrar Nota\n");
+        printf("6. Mostrar Alunos de um Curso\n");
+        printf("7. Mostrar Todos os Cursos do Campus\n");
+        printf("8. Mostrar Disciplinas de um Curso\n");
+        printf("9. Mostrar Disciplinas de um Período de um Curso\n");
+        printf("10. Mostrar Disciplinas Matriculadas de um Aluno\n");
+        printf("11. Mostrar Notas de um Período de um Aluno\n");
+        printf("12. Mostrar Nota de uma Disciplina de um Aluno\n");
+        printf("13. Remover Disciplina de um Curso\n");
+        printf("14. Remover Disciplina de Matricula de um Aluno\n");
+        printf("15. Mostrar Histórico de um Aluno\n");
+        printf("0. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch(opcao) {
+            case 1:
+                
+                break;
+            case 2:
+                
+                break;
+            case 3:
+                
+                break;
+            case 4:
+                
+                break;
+            case 5:
+                
+                break;
+            case 6:
+                
+                break;
+            case 7:
+                
+                break;
+            case 8:
+                
+                break;
+            case 9:
+                
+                break;
+            case 10:
+                
+                break;
+            case 11:
+                
+                break;
+            case 12:
+                
+                break;
+            case 13:
+                
+                break;
+            case 14:
+                
+                break;
+            case 15:
+                
+                break;
+            case 0:
+                printf("Saindo...\n");
+                break;
+            default:
+                printf("Opção inválida!\n");
+                break;
+        }
+    } while(opcao != 0);
+}
 
 
 
+
+
+int main() {
+    Aluno aluno;  
+    aluno.matriculas = NULL;  
+
+    cadastrarMatricula(&aluno, 101);
+    cadastrarMatricula(&aluno, 202);
+    cadastrarMatricula(&aluno, 303);
+
+    printf("Disciplinas matriculadas:\n");
+    mostrarMatriculas(aluno.matriculas); 
+
+    cadastrarNota(&aluno, 101, 9.5);
+    cadastrarNota(&aluno, 202, 8.0);
+
+    printf("Disciplinas restantes após cadastro de notas:\n");
+    mostrarMatriculas(aluno.matriculas);
+
+    printf("Notas cadastradas:\n");
+    mostrarNotas(aluno.nota);
+
+
+
+    return 0;
+}

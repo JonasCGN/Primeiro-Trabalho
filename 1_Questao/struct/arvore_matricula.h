@@ -6,3 +6,4 @@ typedef struct arvoreMatricula{
     struct arvoreMatricula *esq;
     struct arvoreMatricula *dir;
 }ArvoreMatricula;
+
