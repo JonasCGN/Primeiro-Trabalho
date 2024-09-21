@@ -9,11 +9,10 @@ typedef struct aluno{
     int codigoCurso;
 
     ArvoreNota* nota;
-    ArvoreMatricula* matriculas;
+    ArvoreMatricula* matriculaDisciplina;
 }Aluno;
 
 typedef struct listaAluno{
-    Aluno *aluno;
-
+    Aluno aluno;
     struct listaAluno* prox;
 }ListaAluno;
