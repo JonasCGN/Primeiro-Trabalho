@@ -61,11 +61,13 @@ void percorreArvoreDisciplina(ArvoreDisciplina *arvoreDisciplina){
 
 void mostrarDisciplinasCurso(ArvoreCurso *arvoreCurso, int cod){
     if(arvoreCurso != NULL){
-        if(arvoreCurso->curso.codCurso == cod){
+        if(cod == arvoreCurso->curso.codCurso){
             percorreArvoreDisciplina(arvoreCurso->disciplina);
+        }else if(cod < arvoreCurso->curso.codCurso){
+            mostrarDisciplinasCurso(arvoreCurso->esq,cod);
+        }else{
+            mostrarDisciplinasCurso(arvoreCurso->dir,cod);
         }
-        mostrarDisciplinasCurso(arvoreCurso->esq,cod);
-        mostrarDisciplinasCurso(arvoreCurso->dir,cod);
     }
 }
 
@@ -89,11 +91,13 @@ int verificaDisciplina(ArvoreDisciplina *arvoreDisciplina, int codDisciplina){
 //Percorre as disciplinas de um periodo
 void disciplinaPeriodoCurso(ArvoreDisciplina *arvoreDisciplina, int periodo){
     if(arvoreDisciplina != NULL){
-        if(arvoreDisciplina->disciplina.periodo == periodo){
+        if(periodo == arvoreDisciplina->disciplina.periodo){
             exibirInfoDisciplina(arvoreDisciplina->disciplina);
+        }else if(periodo < arvoreDisciplina->disciplina.periodo){
+            disciplinaPeriodoCurso(arvoreDisciplina->esq,periodo);
+        }else{
+            disciplinaPeriodoCurso(arvoreDisciplina->dir,periodo);
         }
-        disciplinaPeriodoCurso(arvoreDisciplina->esq,periodo);
-        disciplinaPeriodoCurso(arvoreDisciplina->dir,periodo);
     }
 }
 
@@ -108,11 +112,12 @@ void mostraDisciplinaPeriodoCurso(ArvoreCurso *arvoreCurso, int cod,int periodo)
 void mostrarInfoDisciplina(ArvoreDisciplina *arvoreDisciplina,int codDisciplina){
     if(arvoreDisciplina != NULL){
         
-        if(arvoreDisciplina->disciplina.codDisciplina == codDisciplina){
+        if(codDisciplina == arvoreDisciplina->disciplina.codDisciplina){
             exibirInfoDisciplina(arvoreDisciplina->disciplina);
+        }else if(codDisciplina < arvoreDisciplina->disciplina.codDisciplina){
+            mostrarInfoDisciplina(arvoreDisciplina->esq,codDisciplina);
+        }else{
+            mostrarInfoDisciplina(arvoreDisciplina->dir,codDisciplina);
         }
-
-        mostrarInfoDisciplina(arvoreDisciplina->esq,codDisciplina);
-        mostrarInfoDisciplina(arvoreDisciplina->dir,codDisciplina);
     }
 }

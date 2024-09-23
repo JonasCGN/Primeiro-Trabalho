@@ -49,10 +49,10 @@ ArvoreCurso *retornaCursoCod(ArvoreCurso *arvoreCurso,int codCurso){
     if(arvoreCurso != NULL){
 
         if(arvoreCurso->curso.codCurso == codCurso){
-            exist = 1;
+            exist = arvoreCurso;
         }else{
             exist = verificaCurso(arvoreCurso->esq,codCurso);
-            if(!exist){
+            if(exist != NULL){
                 exist = verificaCurso(arvoreCurso->dir,codCurso);
             }
         }

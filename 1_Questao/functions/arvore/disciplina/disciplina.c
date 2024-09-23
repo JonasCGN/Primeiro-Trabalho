@@ -3,7 +3,8 @@
 
 #include "./disciplina.h"
 
-void inserirDisciplina(ArvoreDisciplina **arvoreDisciplina, Disciplina disciplina){
+int inserirDisciplina(ArvoreDisciplina **arvoreDisciplina, Disciplina disciplina){
+    int insere = 1;
     if(arvoreDisciplina == NULL){
         ArvoreDisciplina *novaDisciplina = (ArvoreDisciplina*)malloc(sizeof(ArvoreDisciplina));
         
@@ -14,9 +15,13 @@ void inserirDisciplina(ArvoreDisciplina **arvoreDisciplina, Disciplina disciplin
         *arvoreDisciplina = novaDisciplina;
     }else{
         if(disciplina.codDisciplina < (*arvoreDisciplina)->disciplina.codDisciplina){
-            inserirDisciplina(&(*arvoreDisciplina)->esq,disciplina);
+            insere = inserirDisciplina(&(*arvoreDisciplina)->esq,disciplina);
+        }else if(disciplina.codDisciplina > (*arvoreDisciplina)->disciplina.codDisciplina){
+            insere = inserirDisciplina(&(*arvoreDisciplina)->dir,disciplina);
         }else{
-            inserirDisciplina(&(*arvoreDisciplina)->dir,disciplina);
+            insere = 0;
         }
     }
+
+    return insere;
 }

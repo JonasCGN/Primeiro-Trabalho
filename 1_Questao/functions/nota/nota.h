@@ -1,7 +1,10 @@
 #pragma once
 
 #include "../aluno/aluno.h"
+#include "../matricula/matricula.h"
+#include "../arvore/nota/nota.h"
 
+void cadastrarNota(Aluno* aluno, int codDisciplina, float nota);
 //Exibe uma informação de nota
 void exibirInfoNota(Info info);
 //Exibe as informação da arvore de nota

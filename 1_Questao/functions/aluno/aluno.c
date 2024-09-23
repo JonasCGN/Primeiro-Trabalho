@@ -30,9 +30,9 @@ void alunoCurso(ListaAluno *listaAluno, int cod){
         
         if(listaAluno->aluno.codigoCurso == cod){
             exibirInfoAluno(listaAluno->aluno);
+        }else{
+            alunoCurso(listaAluno->prox,cod);
         }
-
-        alunoCurso(listaAluno->prox,cod);
 
     }
 }
@@ -48,13 +48,13 @@ void mostrarAlunoCurso(ListaAluno *listaAluno){
 
 void alunoMatriculaInfo(ArvoreDisciplina *arvoreDisciplina, ArvoreMatricula *arvoreMatricula){
     if(arvoreDisciplina != NULL){
-        
-        if(arvoreDisciplina->disciplina.codDisciplina == arvoreMatricula->codDisciplina){
+        if(arvoreMatricula->codDisciplina == arvoreDisciplina->disciplina.codDisciplina){
             mostrarInfoDisciplina(arvoreDisciplina, arvoreMatricula->codDisciplina);
+        }else if(arvoreMatricula->codDisciplina < arvoreDisciplina->disciplina.codDisciplina){
+            alunoMatricula(arvoreDisciplina,arvoreMatricula->esq);
+        }else{
+            alunoMatricula(arvoreDisciplina,arvoreMatricula->dir);
         }
-
-        alunoMatricula(arvoreDisciplina,arvoreMatricula->esq);
-        alunoMatricula(arvoreDisciplina,arvoreMatricula->dir);
     }
 }
 
@@ -94,11 +94,12 @@ void historicoAluno(ArvoreCurso *arvoreCurso,Aluno aluno){
 
 void mostrarInfoNotaDisciplina(ArvoreNota *arvoreNota,ArvoreDisciplina *arvoreDisciplina,int periodo){
     if(arvoreNota != NULL){
-        if(arvoreDisciplina->disciplina.periodo == periodo){
+        if(periodo == arvoreDisciplina->disciplina.periodo){
             exibirNotaMatricula(arvoreNota,arvoreDisciplina->disciplina.codDisciplina);
+        }else if(periodo < arvoreDisciplina->disciplina.periodo){
+            mostrarInfoNotaDisciplina(arvoreNota,arvoreDisciplina->esq,periodo);
+        }else{
+            mostrarInfoNotaDisciplina(arvoreNota,arvoreDisciplina->dir,periodo);
         }
-
-        mostrarInfoNotaDisciplina(arvoreNota,arvoreDisciplina->esq,periodo);
-        mostrarInfoNotaDisciplina(arvoreNota,arvoreDisciplina->dir,periodo);
     }
 }

@@ -3,7 +3,8 @@
 
 #include "./curso.h"
 
-void inserirCurso(ArvoreCurso **arvoreCurso, Curso curso){
+int inserirCurso(ArvoreCurso **arvoreCurso, Curso curso){
+    int insere = 1;
     if(*arvoreCurso == NULL){
         ArvoreCurso *novoCurso = (ArvoreCurso*)malloc(sizeof(ArvoreCurso));
         
@@ -14,10 +15,14 @@ void inserirCurso(ArvoreCurso **arvoreCurso, Curso curso){
         *arvoreCurso = novoCurso;
     }else{
         if(curso.codCurso < (*arvoreCurso)->curso.codCurso){
-            inserirCurso(&(*arvoreCurso)->esq,curso);
+            insere = inserirCurso(&(*arvoreCurso)->esq,curso);
+        }else if(curso.codCurso > (*arvoreCurso)->curso.codCurso){
+            insere = inserirCurso(&(*arvoreCurso)->dir,curso);
         }else{
-            inserirCurso(&(*arvoreCurso)->dir,curso);
+            insere = 0;
         }
     }
+
+    return insere;
 }
 
