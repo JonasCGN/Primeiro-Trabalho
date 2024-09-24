@@ -28,24 +28,24 @@ void inserirValor(No **no, int num){
     }
 }
 
-No* verificaCurso(No *arvoreCurso, int codCurso){
-    No* exist;
-    exist = NULL;
+// No* verificaCurso(No *arvoreCurso, int codCurso){
+//     No* exist;
+//     exist = NULL;
 
-    if(arvoreCurso != NULL){
-        if(arvoreCurso->num == codCurso){
-            exist = arvoreCurso;
-        }else{
-            exist = verificaCurso(arvoreCurso->esq,codCurso);
+//     if(arvoreCurso != NULL){
+//         if(arvoreCurso->num == codCurso){
+//             exist = arvoreCurso;
+//         }else{
+//             exist = verificaCurso(arvoreCurso->esq,codCurso);
 
-            if(!exist){
-                exist = verificaCurso(arvoreCurso->dir,codCurso);
-            }
-        }
-    }
+//             if(!exist){
+//                 exist = verificaCurso(arvoreCurso->dir,codCurso);
+//             }
+//         }
+//     }
 
-    return exist;
-}
+//     return exist;
+// }
 
 /*
 
@@ -139,19 +139,61 @@ int removerDisciplinaMatricula(No** raiz, int codDisciplina) {
 
 */
 
-No* menorDireita(No *no,No **filho){
-    No *aux;
-    aux = NULL;
+int removerDisciplinaMatricula(No **m, int cod){
+    int existe = 0;
 
-    if(no != NULL){
-        aux = menorDireita(no->esq,filho);
-        if(!aux){
-            aux = no;
-            *filho = no->dir;
-        }
+    if((*m)){
+
+        if(cod == (*m)->num){
+            existe = 1;
+
+            No *aux = *m;
+            if((*m)->esq == NULL && (*m)->dir == NULL){
+                free(aux);
+                *m = NULL;
+            }
+            /* Só tem o filho da esquerda */
+            else if((*m)->dir == NULL){
+                (*m) = (*m)->esq;
+                aux->esq = NULL;
+                free(aux);
+                aux = NULL;
+            }
+            /* Só tem o filho da direita */
+            else if((*m)->esq == NULL){
+                (*m) = (*m)->dir;
+                aux->dir = NULL;
+                free(aux);
+                aux = NULL;
+            }
+            /* O nó mais a esquerda da sub-árvore à direita */
+            else {
+                No *menor;
+                No *no;
+                menor = (*m)->dir;
+                no = NULL;
+                
+                while(menor->esq != NULL){
+                    no = menor;
+                    menor = menor->esq;
+                }
+                
+                if(no){
+                    no->esq = menor->dir;
+                }else{
+                    (*m)->dir = menor->dir;
+                }
+
+                (*m)->num = menor->num;
+                free(menor);
+            }
+        }else if(cod < (*m)->num)
+            existe = removerDisciplinaMatricula(&(*m)->esq, cod);
+        else
+            existe = removerDisciplinaMatricula(&(*m)->dir, cod);
     }
 
-    return aux;
+    return existe;
 }
 
 void exibirArvore(No *arvoreCurso){
@@ -162,6 +204,22 @@ void exibirArvore(No *arvoreCurso){
     }else{
         printf("Nada ");
     }
+}
+
+int verificaCurso(No *arvoreCurso, int codCurso){
+    int exist = 0;
+
+    if(arvoreCurso != NULL){
+        if(arvoreCurso->num == codCurso){
+            exist = 1;
+        }else if(codCurso < arvoreCurso->num){
+            exist = verificaCurso(arvoreCurso->esq,codCurso);
+        }else if(codCurso > arvoreCurso->num){
+            exist = verificaCurso(arvoreCurso->dir,codCurso);
+        }
+    }
+
+    return exist;
 }
 
 int main(){
@@ -176,16 +234,20 @@ int main(){
     inserirValor(&arvore,9);
     inserirValor(&arvore,8);
     inserirValor(&arvore,11);
+    inserirValor(&arvore,2);
+    inserirValor(&arvore,12);
     // inserirValor(&arvore,7);
     // inserirValor(&arvore,10);
 
-    printf("Remove = %d\n",removerDisciplinaMatricula(&arvore,3));
+    exibirArvore(arvore);
+    printf("\n");
+    printf("Remove = %d\n",removerDisciplinaMatricula(&arvore,7));
 
-    int n=11;
+    // int n=11;
 
-    if(verificaCurso(arvore,n)){
-        printf("%d\n", verificaCurso(arvore,n)->num);
-    }
+    // if(verificaCurso(arvore,n)){
+    //     printf("%d\n", verificaCurso(arvore,n));
+    // }
 
     exibirArvore(arvore);
 

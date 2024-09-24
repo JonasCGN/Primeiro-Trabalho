@@ -31,81 +31,53 @@ int inserirMatricula(ArvoreMatricula** raiz, int codDisciplina) {
 - 2 Filho
 */
 
-int removerDisciplinaMatricula(ArvoreMatricula** raiz, int codDisciplina) {
-    int removido = 1;
+int removerDisciplinaMatricula(ArvoreMatricula **raiz, int codDisciplina){
+    int existe = 0;
 
-    if ((*raiz) != NULL) {  
+    if((*raiz)){
 
-        if((*raiz)->codDisciplina == codDisciplina){
+        if(codDisciplina == (*raiz)->codDisciplina){
+            existe = 1;
 
-
-            if(folhaArvore(*raiz)){
+            ArvoreMatricula *aux = *raiz;
+            if((*raiz)->esq == NULL && (*raiz)->dir == NULL){
+                free(aux);
+                *raiz = NULL;
+            }else if((*raiz)->dir == NULL){
+                (*raiz) = (*raiz)->esq;
+                aux->esq = NULL;
+                free(aux);
+                aux = NULL;
+            }else if((*raiz)->esq == NULL){
+                (*raiz) = (*raiz)->dir;
+                aux->dir = NULL;
+                free(aux);
+                aux = NULL;
+            }else {
+                ArvoreMatricula* menor;
+                ArvoreMatricula* no;
+                menor = (*raiz)->dir;
+                no = NULL;
                 
-            }else if((*raiz)->esq != NULL || (*raiz)->dir != NULL){
+                while(menor->esq != NULL){
+                    no = menor;
+                    menor = menor->esq;
+                }
                 
-                filho = filhoArvore(*raiz);
-                aux = filho;
+                if(no){
+                    no->esq = menor->dir;
+                }else{
+                    (*raiz)->dir = menor->dir;
+                }
 
-            }else{
-                aux = menorDireita((*raiz)->dir,&filho);
+                (*raiz)->codDisciplina = menor->codDisciplina;
+                free(menor);
             }
-
-        }else if(codDisciplina < (*raiz)->codDisciplina){
-            removido = removerDisciplinaMatricula((*raiz)->esq,codDisciplina);
-        }else if(codDisciplina > (*raiz)->codDisciplina){
-            removido = removerDisciplinaMatricula((*raiz)->dir,codDisciplina);
-        }else{
-            removido = 0;
-        }
-    
-    }
-    
-    return removido;
-
-}
-
-int folhaArvore(ArvoreMatricula *arvoreMatricula){
-    return (arvoreMatricula->esq == arvoreMatricula->dir == NULL) ? 1 : 0;
-}
-
-ArvoreMatricula *filhoArvore(ArvoreMatricula *arvoreMatricula){
-    ArvoreMatricula *filho;
-
-    if(arvoreMatricula->dir != NULL){
-        filho = arvoreMatricula->dir;
-    }else if(arvoreMatricula->esq != NULL){
-        filho = arvoreMatricula->esq;
-    } 
-
-    return filho;
-}
-
-ArvoreMatricula* menorDireita(ArvoreMatricula *arvoreMatricula,ArvoreMatricula **filho){
-    ArvoreMatricula *aux;
-    aux = arvoreMatricula;
-
-    if(arvoreMatricula != NULL){
-        aux = menorDireita(arvoreMatricula->esq,filho);
-        filho = &(arvoreMatricula->dir);
+        }else if(codDisciplina < (*raiz)->codDisciplina)
+            existe = removerDisciplinaMatricula(&(*raiz)->esq, codDisciplina);
+        else
+            existe = removerDisciplinaMatricula(&(*raiz)->dir, codDisciplina);
     }
 
-    return aux;
-}
-
-ArvoreMatricula* paiFilho(ArvoreMatricula *arvoreMatricula,ArvoreMatricula **filho, int codDisciplina){
-    ArvoreMatricula *aux;
-    aux = arvoreMatricula;
-
-    if(arvoreMatricula != NULL){
-        if(arvoreMatricula->codDisciplina == codDisciplina){
-            aux = arvoreMatricula;
-            filho = &arvoreMatricula;
-        }else if(codDisciplina > arvoreMatricula->codDisciplina){
-            aux = menorDireita(arvoreMatricula->esq,filho,codDisciplina);
-        }else{
-            aux = menorDireita(arvoreMatricula->dir,filho,codDisciplina);
-        }
-    }
-
-    return aux;
+    return existe;
 }
