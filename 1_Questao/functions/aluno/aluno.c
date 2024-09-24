@@ -65,14 +65,15 @@ void mostrarDisciplinaAluno(ArvoreCurso *arvoreCurso,Aluno aluno){
     alunoMatriculaInfo(curso->disciplina,aluno.matriculaDisciplina);
 }
 
-Aluno *alunoMatricula(ListaAluno *listaAluno, int matricula){
-    Aluno *aluno = NULL;
+Aluno alunoMatricula(ListaAluno *listaAluno, int matricula,int *verifica){
+    Aluno aluno;
 
     if(listaAluno != NULL){
         if(listaAluno->aluno.matricula == matricula){
-            aluno = &(listaAluno->aluno);
+            *verifica = 1;
+            aluno = (listaAluno->aluno);
         }else{
-            aluno = alunoMatricula(listaAluno->prox,matricula);
+            aluno = alunoMatricula(listaAluno->prox,matricula,verifica);
         }
     }
 

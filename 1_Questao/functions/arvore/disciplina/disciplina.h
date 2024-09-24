@@ -4,3 +4,4 @@
 
 //Vai inserir uma disciplina na arvore de disciplina
 void inserirDisciplina(ArvoreDisciplina **arvoreDisciplina, Disciplina disciplina);
+int removerDisciplina(ArvoreDisciplina **raiz, int codDisciplina);

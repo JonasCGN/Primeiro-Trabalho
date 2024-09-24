@@ -5,14 +5,13 @@
 
 /*Tudo foi flávio*/
 
-int buscarDisciplinaNaMatricula(ArvoreMatricula* raiz, int codDisciplina) {
+int buscarDisciplinaNaMatricula(ArvoreMatricula* raiz, int codDisciplina){
     int exist = 0;
 
     if(raiz != NULL){
         if (raiz->codDisciplina == codDisciplina){
             exist = 1;
         }  
-
         exist = buscarDisciplinaNaMatricula(raiz->esq, codDisciplina) || buscarDisciplinaNaMatricula(raiz->dir, codDisciplina);
         
     }
@@ -20,15 +19,34 @@ int buscarDisciplinaNaMatricula(ArvoreMatricula* raiz, int codDisciplina) {
     return exist;
 }
 
-void cadastrarMatricula(Aluno* aluno, int codDisciplina) {
-    if (buscarDisciplinaNaMatricula(aluno->matriculaDisciplina, codDisciplina)) {
-        printf("Erro: Disciplina %d já está cadastrada!\n", codDisciplina);
-        return;
+void cadastrarMatricula(ArvoreCurso *arvoreCurso,Aluno* aluno){
+    ArvoreCurso *curso;
+
+    int codDisciplina;
+    
+
+
+    if((curso = retornaCursoCod(arvoreCurso,(*aluno).codigoCurso))){
+        percorreArvoreDisciplina(curso->disciplina);
+
+        printf("Digite a matricula da disciplina:");
+        scanf("%d", &codDisciplina);
+        
+        if(verificaDisciplina(curso->disciplina,codDisciplina)){
+            if(inserirMatricula(&(aluno->matriculaDisciplina), codDisciplina)){
+                printf("Matricula realizada com sucesso!\n");
+            }else{
+                printf("O aluno ja esta matriculado nessa disciplina!\n");
+            }
+        }
     }
-    aluno->matriculaDisciplina = inserirMatricula(aluno->matriculaDisciplina, codDisciplina);
+    
+
+    
+
 }
 
-void mostrarMatriculas(ArvoreMatricula* raiz) {
+void mostrarMatriculas(ArvoreMatricula* raiz){
     if (raiz != NULL) {
         mostrarMatriculas(raiz->esq);
         printf("Disciplina: %d\n", raiz->codDisciplina);

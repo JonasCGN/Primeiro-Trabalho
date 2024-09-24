@@ -16,7 +16,7 @@ void alunoMatriculaInfo(ArvoreDisciplina *arvoreDisciplina, ArvoreMatricula *arv
 //Mostrar todas as disciplinas que um determinado aluno está matriculado
 void mostrarDisciplinaAluno(ArvoreCurso *arvoreCurso, Aluno aluno);
 //Retorna o aluno com a respectiva matricula
-Aluno *alunoMatricula(ListaAluno *listaAluno, int matricula);
+Aluno alunoMatricula(ListaAluno *listaAluno, int matricula,int *verifica);
 //Mostar Informacao da Nota Apartir da Disciplina
 void mostrarInfoNotaDisciplina(ArvoreNota *arvoreNota,ArvoreDisciplina *arvoreDisciplina,int periodo);
 //Histórico do Aluno

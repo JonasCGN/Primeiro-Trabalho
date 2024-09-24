@@ -139,58 +139,65 @@ int removerDisciplinaMatricula(No** raiz, int codDisciplina) {
 
 */
 
-int removerDisciplinaMatricula(No **m, int cod){
+int ehFolha(No *raiz){
+    return (raiz->esq == NULL && raiz->dir == NULL);
+}
+
+No *soUmFilho(No *raiz){
+    No *aux;
+    aux = NULL;
+
+    if(raiz->dir == NULL){
+        aux = raiz->esq;
+    }else if(raiz->esq == NULL){
+        aux = raiz->dir;
+    }
+
+    return aux;
+}
+
+No *menorFilho(No *raiz){
+    No *aux;
+    aux = NULL;
+
+    if(raiz){
+        aux = menorFilho(raiz->esq);
+        if(!aux){
+            aux = raiz;
+        }
+
+    }
+
+    return aux;
+}
+
+int removerDisciplina(No **raiz, int codDisciplina){
+    No *endFilho;
     int existe = 0;
 
-    if((*m)){
+    if((*raiz)){
 
-        if(cod == (*m)->num){
+        if(codDisciplina == (*raiz)->num){
             existe = 1;
 
-            No *aux = *m;
-            if((*m)->esq == NULL && (*m)->dir == NULL){
+            No *aux = *raiz;
+            if(ehFolha(*raiz)){
+                *raiz = NULL;
                 free(aux);
-                *m = NULL;
-            }
-            /* Só tem o filho da esquerda */
-            else if((*m)->dir == NULL){
-                (*m) = (*m)->esq;
-                aux->esq = NULL;
+            }else if((endFilho = soUmFilho(*raiz)) != NULL){
+                aux = *raiz;
+                *raiz = endFilho;
                 free(aux);
-                aux = NULL;
-            }
-            /* Só tem o filho da direita */
-            else if((*m)->esq == NULL){
-                (*m) = (*m)->dir;
-                aux->dir = NULL;
-                free(aux);
-                aux = NULL;
-            }
-            /* O nó mais a esquerda da sub-árvore à direita */
-            else {
-                No *menor;
-                No *no;
-                menor = (*m)->dir;
-                no = NULL;
+            }else {
+                endFilho = menorFilho((*raiz)->dir);
                 
-                while(menor->esq != NULL){
-                    no = menor;
-                    menor = menor->esq;
-                }
-                
-                if(no){
-                    no->esq = menor->dir;
-                }else{
-                    (*m)->dir = menor->dir;
-                }
-
-                (*m)->num = menor->num;
-                free(menor);
+                (*raiz)->num = endFilho->num;
+                removerDisciplina(&(*raiz)->dir,endFilho->num);
             }
-        }else if(cod < (*m)->num)
-            existe = removerDisciplinaMatricula(&(*m)->esq, cod);
+        }else if(codDisciplina < (*raiz)->num)
+            existe = removerDisciplina(&(*raiz)->esq, codDisciplina);
         else
-            existe = removerDisciplinaMatricula(&(*m)->dir, cod);
+            existe = removerDisciplina(&(*raiz)->dir, codDisciplina);
     }
 
     return existe;
@@ -236,12 +243,15 @@ int main(){
     inserirValor(&arvore,11);
     inserirValor(&arvore,2);
     inserirValor(&arvore,12);
-    // inserirValor(&arvore,7);
+    // inserirValor(&arvore,7);0
+
+
     // inserirValor(&arvore,10);
 
     exibirArvore(arvore);
+
     printf("\n");
-    printf("Remove = %d\n",removerDisciplinaMatricula(&arvore,7));
+    printf("Remove = %d\n",removerDisciplina(&arvore,7));
 
     // int n=11;
 
