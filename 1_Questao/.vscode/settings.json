@@ -1,5 +1,12 @@
 {
     "files.associations": {
-        "curso.h": "c"
+        "curso.h": "c",
+        "liberar.h": "c",
+        "aluno.h": "c",
+        "nota.h": "c",
+        "disciplina.h": "c",
+        "matricula.h": "c",
+        "stdlib.h": "c",
+        "stdio.h": "c"
     }
 }
