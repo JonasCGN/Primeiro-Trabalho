@@ -4,24 +4,25 @@
 #include "./nota.h"
 
 //Flavio
-int inserirNota(ArvoreNota** raiz, Info info) {
+int inserirNota(ArvoreNota **arvoreNota, Info info){
     int insere = 1;
-
-    if (!(*raiz)) {
-        ArvoreNota* novaNota = (ArvoreNota*) malloc(sizeof(ArvoreNota));
+    
+    if(!(*arvoreNota)){
+        ArvoreNota *novaNota = (ArvoreNota*)malloc(sizeof(ArvoreNota));
         
         novaNota->info = info;
-        novaNota->esq = novaNota->dir = NULL;
+        novaNota->esq = NULL;
+        novaNota->dir = NULL;
 
-        *raiz = novaNota;
+        *arvoreNota = novaNota;
     }else{
-        if (info.codDisciplina < (*raiz)->info.codDisciplina)
-            inserirNota(&(*raiz)->esq, info);
-        else if (info.codDisciplina > (*raiz)->info.codDisciplina)
-            inserirNota(&(*raiz)->dir, info);
-        else
+        if(info.codDisciplina < (*arvoreNota)->info.codDisciplina){
+            insere = inserirNota(&(*arvoreNota)->esq,info);
+        }else if(info.codDisciplina > (*arvoreNota)->info.codDisciplina){
+            insere = inserirNota(&(*arvoreNota)->dir,info);
+        }else{
             insere = 0;
-
+        }
     }
 
     return insere;

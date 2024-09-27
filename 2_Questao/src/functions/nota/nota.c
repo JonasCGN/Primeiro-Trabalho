@@ -79,13 +79,13 @@ Info* exibirNotaMatricula(ArvoreNota *arvoreNota, int codDisciplina){
     Info* info;
     info = NULL;
 
-    if(arvoreNota != NULL){
+    if(arvoreNota){
         if(codDisciplina == arvoreNota->info.codDisciplina){
             info = &arvoreNota->info;
         }else if(codDisciplina < arvoreNota->info.codDisciplina){
-            exibirNotaMatricula(arvoreNota->esq,codDisciplina);
+            info = exibirNotaMatricula(arvoreNota->esq,codDisciplina);
         }else{
-            exibirNotaMatricula(arvoreNota->dir,codDisciplina);
+            info = exibirNotaMatricula(arvoreNota->dir,codDisciplina);
         }
     }
 

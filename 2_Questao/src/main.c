@@ -159,6 +159,7 @@ int main() {
     // menu();
     
     // verificaTempoInsercao();
+    
     verificaTempoBusca();
 
     getchar();

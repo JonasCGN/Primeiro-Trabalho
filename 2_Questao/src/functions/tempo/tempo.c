@@ -7,7 +7,7 @@
 #define TESTE 30
 #define QTDINSERCAO 1000
 
-#define QTDINFO 50
+#define QTDINFO 60
 #define QTDBUSCA 75
 
 static double verificaCrescenteCurso(ArvoreCurso *arvoreTeste, Curso *curso){
@@ -26,8 +26,8 @@ static double verificaCrescenteCurso(ArvoreCurso *arvoreTeste, Curso *curso){
         tempo_total += tempo_gasto;
 
     }
-    liberarCursos(arvoreTeste);
 
+    liberarCursos(arvoreTeste);
     return tempo_total;
 }
 
@@ -136,127 +136,177 @@ void verificaTempoInsercao(){
     free(curso);
 }
 
-static double verificaCrescenteNota(ArvoreNota *arvoreTeste, Info *info){
+static double verificaCrescenteNota(ArvoreNota *arvoreTeste, ArvoreDisciplina *arvoreDisciplina,Info *info){
     clock_t inicio, fim;
     double tempo_gasto,tempo_total=0;
-
-
+    
     for(int i=0;i < QTDBUSCA;i++){
         inicio = clock();
     
-        inserirNota(&arvoreTeste,info[i]);
-    
+        exibirNotaMatricula(arvoreTeste,info[i].codDisciplina);
+        verificaDisciplina(arvoreDisciplina,info[i].codDisciplina);
+
         fim = clock();
         
         tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
         tempo_total += tempo_gasto;
 
     }
-    liberarNotas(arvoreTeste);
-
+    
     return tempo_total;
 }
 
-static double verificaDecrescenteNota(ArvoreNota *arvoreTeste, Info *info){
+static double verificaDecrescenteNota(ArvoreNota *arvoreTeste,ArvoreDisciplina *arvoreDisciplina, Info *info){
     clock_t inicio, fim;
     double tempo_gasto,tempo_total=0;
 
     for(int i = QTDBUSCA - 1;0 <= i;i--){
         inicio = clock();
-        inserirNota(&arvoreTeste,info[i]);
-        fim = clock();
+        exibirNotaMatricula(arvoreTeste,info[i].codDisciplina);
+        verificaDisciplina(arvoreDisciplina,info[i].codDisciplina);
+        fim = clock();  
 
         tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
         tempo_total += tempo_gasto;
-
     }
-
-    liberarNotas(arvoreTeste);
+    
     return tempo_total;
 }
 
-static void vetIntAleatorioSemRepeticaoNota(Info **vetor){
-    for (int i = 0; i < QTDBUSCA; i++){
-        int num = rand() % (QTDBUSCA * 2);
+static void vetIntAleatorioSemRepeticaoNota(Info **vetor,Disciplina **disciplina){
+    for (int i = 0; i < QTDINFO; i++){
+        int num = rand() % (QTDINFO * 2);
         int j = 0;
 
-        int isRepetido = 0;
-        for (j = 0; j < i && !isRepetido; j++)
-        if ((*vetor)[j].codDisciplina == num)
-            isRepetido = 1;
+        int repetido = 0;
+        for (j = 0; j < i && !repetido; j++)
+            if ((*vetor)[j].codDisciplina == num)
+                repetido = 1;
 
-        if (!isRepetido)
-        (*vetor)[i].codDisciplina = num;
+        if (!repetido){
+            (*vetor)[i].codDisciplina = num;
+            (*disciplina)[i].codDisciplina = num;
+        }
         else
-        i--;
+            i--;
     }
 }
 
-static double verificaAleatorioNota(ArvoreNota *arvoreTeste, Info *info){
+static double verificaAleatorioNota(ArvoreNota *arvoreTeste,ArvoreDisciplina *arvoreDisciplina, Info *info){
     clock_t inicio, fim;
     double tempo_gasto,tempo_total=0;
 
-    vetIntAleatorioSemRepeticaoNota(&info);
-
     for(int i = 0;i < QTDBUSCA;i++){
         inicio = clock();
-        inserirNota(&arvoreTeste,info[i]);
-        fim = clock();
+        exibirNotaMatricula(arvoreTeste,info[i].codDisciplina);
+        verificaDisciplina(arvoreDisciplina,info[i].codDisciplina);
+        fim = clock();  
 
         tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
         tempo_total += tempo_gasto;
     }
 
-    liberarNotas(arvoreTeste);
-
     return tempo_total;
 }
 
-void verificaTempoBusca(){
+void exibeTempoCrescente(Info *info,Disciplina *disciplina){
     ArvoreNota *arvoreTeste;
     arvoreTeste = NULL;
-
+    ArvoreDisciplina *arvoreDisciplina;
+    arvoreDisciplina = NULL;
+    
     double tempo_gasto,tempo_total=0;
-    srand((unsigned int)time(NULL));
-
-    Info *info;
-    info = (Info*)malloc(((size_t)QTDINFO) * sizeof(Info) );
-
+    
     for(int i=0;i < QTDINFO;i++){
-        info[i].codDisciplina = i + 1;
+        inserirNota(&arvoreTeste,info[i]);
+        inserirDisciplina(&arvoreDisciplina,disciplina[i]);
     }
 
     printf("Teste de busca crescente\n");
     for(int i=0;i < TESTE;i++){
-        tempo_gasto = verificaCrescenteNota(arvoreTeste,info);
+        tempo_gasto = verificaCrescenteNota(arvoreTeste,arvoreDisciplina,info);
         printf("Duracao do %d teste: %lf\n",i+1,tempo_gasto);
         tempo_total += tempo_gasto;
     }
     printf("A duracao total foi de: %lf\n",  tempo_total);
     printf("A media foi de: %lf\n",  tempo_total / TESTE);
+
+    liberarNotas(arvoreTeste);
+    liberarDisciplinas(arvoreDisciplina);
+
+}
+
+void exibeTempoDerescente(Info *info,Disciplina *disciplina){
+    ArvoreNota *arvoreTeste;
+    arvoreTeste = NULL;
+    ArvoreDisciplina *arvoreDisciplina;
+    arvoreDisciplina = NULL;
     
-    tempo_total = 0;
+    double tempo_gasto,tempo_total=0;
+    
+    for(int i=0;i < QTDINFO;i++){
+        inserirNota(&arvoreTeste,info[i]);
+        inserirDisciplina(&arvoreDisciplina,disciplina[i]);
+    }
 
     printf("Teste de busca decrescente\n");
     for(int i=0;i < TESTE;i++){
-        tempo_gasto = verificaDecrescenteNota(arvoreTeste,info);
+        tempo_gasto = verificaDecrescenteNota(arvoreTeste,arvoreDisciplina,info);
         printf("Duracao do %d teste: %lf\n",i+1,tempo_gasto);
         tempo_total += tempo_gasto;
     }
     printf("A duracao total foi de: %lf\n",  tempo_total);
     printf("A media foi de: %lf\n",  tempo_total / TESTE);
 
-    tempo_total = 0;
+    liberarNotas(arvoreTeste);
+    liberarDisciplinas(arvoreDisciplina);
+}
+
+void exibeTempoAleatorio(Info *info,Disciplina *disciplina){
+    ArvoreNota *arvoreTeste;
+    arvoreTeste = NULL;
+    ArvoreDisciplina *arvoreDisciplina;
+    arvoreDisciplina = NULL;
+
+    double tempo_gasto,tempo_total=0;
+
+    vetIntAleatorioSemRepeticaoNota(&info,&disciplina);
+    
+    for(int i=0;i < QTDINFO;i++){
+        inserirNota(&arvoreTeste,info[i]);
+        inserirDisciplina(&arvoreDisciplina,disciplina[i]);
+    }
 
     printf("Teste de busca aleatoria\n");
     for(int i=0;i < TESTE;i++){
-        tempo_gasto = verificaAleatorioNota(arvoreTeste,info);
+        tempo_gasto = verificaAleatorioNota(arvoreTeste,arvoreDisciplina,info);
         printf("Duracao do %d teste: %lf\n",i+1,tempo_gasto);
         tempo_total += tempo_gasto;
     }
     printf("A duracao total foi de: %lf\n",  tempo_total);
     printf("A media foi de: %lf\n",  tempo_total / TESTE);
 
-    free(info);
+    liberarNotas(arvoreTeste);
+    liberarDisciplinas(arvoreDisciplina);
+}
 
+void verificaTempoBusca(){
+
+    Info *info;
+    info = (Info*)malloc(((size_t)QTDINFO) * sizeof(Info));
+
+    Disciplina *disciplina;
+    disciplina = (Disciplina*)malloc(((size_t)QTDINFO) * sizeof(Disciplina));
+
+    for(int i=0;i < QTDINFO;i++){
+        info[i].codDisciplina = i + 1;
+        disciplina[i].codDisciplina = i + 1;
+    }
+
+    exibeTempoCrescente(info,disciplina);
+    exibeTempoDerescente(info,disciplina);
+    exibeTempoAleatorio(info,disciplina);
+
+    free(disciplina);
+    free(info);
 }
