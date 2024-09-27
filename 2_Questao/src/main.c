@@ -156,8 +156,11 @@ void menu() {
 
 int main() {
     
-    menu();
+    // menu();
     
+    // verificaTempoInsercao();
+    verificaTempoBusca();
+
     getchar();
     
     return 0;
