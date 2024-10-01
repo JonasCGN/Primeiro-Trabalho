@@ -5,10 +5,10 @@
 #include "tempo.h"
 
 #define TESTE 30
-#define QTDINSERCAO 60
+#define QTDINSERCAO 1000
 
-#define QTDINFO 60
-#define QTDBUSCA 75
+#define QTDINFO 1000
+#define QTDBUSCA 1200
 
 static void limpaCurso(ArvoreCurso *raiz){
     if (raiz){

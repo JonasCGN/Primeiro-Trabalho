@@ -123,6 +123,7 @@ static ArvoreMatricula *menorFilho(ArvoreMatricula *raiz){
     }
 
     return aux;
+}
 
 int removerDisciplinaMatricula(ArvoreMatricula **raiz, int codDisciplina){
     ArvoreMatricula *endFilho;
