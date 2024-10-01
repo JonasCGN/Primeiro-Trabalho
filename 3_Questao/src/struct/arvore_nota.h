@@ -11,6 +11,5 @@ typedef struct arvoreNota{
     Info info;
 
     int altura;
-    struct arvoreNota* esq; 
-    struct arvoreNota* dir; 
+    struct arvoreNota *esq,*dir; 
 }ArvoreNota;

@@ -25,5 +25,3 @@ void historicoAluno(ArvoreCurso *arvoreCurso,Aluno aluno);
 int verificaMatriculadoDisciplina(ListaAluno *listaAluno, int codDisciplina);
 
 void mostrarDisciplinaNotaPeriodo(Info info, ArvoreDisciplina *arvoreDisciplina,int periodo);
-
-int alunoExiste(ListaAluno *listaAluno, int matricula);

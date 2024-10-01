@@ -101,7 +101,8 @@ static int ehFolha(ArvoreDisciplina *raiz){
 
 static ArvoreDisciplina *soUmFilho(ArvoreDisciplina *raiz){
     ArvoreDisciplina *aux;
-
+    aux = NULL;
+    
     if(raiz->dir == NULL){
         aux = raiz->esq;
     }else if(raiz->esq == NULL){
@@ -113,12 +114,11 @@ static ArvoreDisciplina *soUmFilho(ArvoreDisciplina *raiz){
 
 static ArvoreDisciplina *menorFilho(ArvoreDisciplina *raiz){
     ArvoreDisciplina *aux;
-    aux = NULL;
+    aux = raiz;
 
     if(raiz){
-        aux = menorFilho(raiz->esq);
-        if(!aux)
-            aux = raiz;
+        if(raiz->esq)
+            aux = menorFilho(raiz->esq);
     }
 
     return aux;
@@ -139,8 +139,8 @@ int removerDisciplina(ArvoreDisciplina **raiz, int codDisciplina){
                 *raiz = NULL;
             }else if((endFilho = soUmFilho(*raiz)) != NULL){
                 aux = *raiz;
-                *raiz = endFilho;
                 free(aux);
+                *raiz = endFilho;
             }else {
                 endFilho = menorFilho((*raiz)->dir);
                 

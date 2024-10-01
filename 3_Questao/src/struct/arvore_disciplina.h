@@ -11,6 +11,5 @@ typedef struct arvoreDisciplina{
     Disciplina disciplina;
 
     int altura;
-    struct arvoreDisciplina* esq; 
-    struct arvoreDisciplina* dir; 
+    struct arvoreDisciplina *esq,*dir; 
 }ArvoreDisciplina;

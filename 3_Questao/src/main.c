@@ -13,7 +13,6 @@ void menu() {
     Aluno* aluno;
 
     do {
-        
         printf("\n======== MENU PRINCIPAL ========\n");
         printf("1. Cadastrar Curso\n");
         printf("2. Cadastrar Aluno\n");
@@ -28,7 +27,7 @@ void menu() {
         printf("11. Mostrar Notas de um Período de um Aluno\n");
         printf("12. Mostrar Nota de uma Disciplina de um Aluno\n");
         printf("13. Remover Disciplina de um Curso\n");
-        printf("14. Remover Disciplina de Matricula de um Aluno\n");
+        printf("14. Remover Matricula de Disciplina de um Aluno\n");
         printf("15. Mostrar Histórico de um Aluno\n");
         // printf("16 - Mostrar lista aaluno\n");
         printf("0. Sair\n");
