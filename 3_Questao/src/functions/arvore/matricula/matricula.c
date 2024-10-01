@@ -78,7 +78,7 @@ void balanceamentoArvoreMatricula(ArvoreMatricula **raiz){
     if(fb >= 2){
         aux = (*raiz)->esq;
 
-        fb = alturaArvoreMatricula((*raiz)->esq) - alturaArvoreMatricula((*raiz)->dir);
+        fb = alturaArvoreMatricula(aux->esq) - alturaArvoreMatricula(aux->dir);
         if(fb < 0){
             rotacaoEsquerdaMatricula(&(*raiz)->esq);
         }
