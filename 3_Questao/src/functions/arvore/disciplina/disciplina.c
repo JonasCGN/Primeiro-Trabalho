@@ -77,7 +77,7 @@ void balanceamentoArvoreDisciplina(ArvoreDisciplina **raiz){
     if(fb >= 2){
         aux = (*raiz)->esq;
 
-        fb = alturaArvoreDisciplina((*raiz)->esq) - alturaArvoreDisciplina((*raiz)->dir);
+        fb = alturaArvoreDisciplina(aux->esq) - alturaArvoreDisciplina(aux->dir);
         if(fb < 0){
             rotacaoEsquerdaDisciplina(&(*raiz)->esq);
         }
