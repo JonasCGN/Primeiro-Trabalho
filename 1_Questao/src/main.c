@@ -158,7 +158,5 @@ int main() {
     
     menu();
     
-    getchar();
-    
     return 0;
 }

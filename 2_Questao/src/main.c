@@ -9,11 +9,10 @@ void menu() {
     arvoreCurso = NULL;
     listaAluno = NULL;
 
-    int opcao,periodo,opc,matricula,codDisciplina,verifica;
+    int opcao,periodo,opc,matricula,codDisciplina;
     Aluno* aluno;
 
     do {
-        verifica = 0;
         
         printf("\n======== MENU PRINCIPAL ========\n");
         printf("1. Cadastrar Curso\n");
@@ -51,8 +50,8 @@ void menu() {
                 printf("Digite a matricula do aluno:");
                 scanf("%d",&opc);
 
-                aluno = alunoMatricula(listaAluno,opc,&verifica);
-                if(verifica){
+                aluno = alunoMatricula(listaAluno,opc);
+                if(aluno){
                     cadastrarMatricula(arvoreCurso,aluno);
                 }
                 break;
@@ -87,8 +86,8 @@ void menu() {
                 printf("Digite  a matricula do aluno:");
                 scanf("%d", &matricula);
 
-                aluno = alunoMatricula(listaAluno,matricula,&verifica);
-                if(verifica){
+                aluno = alunoMatricula(listaAluno,matricula);
+                if(aluno){
                     mostrarDisciplinaAluno(arvoreCurso,*aluno);
                 }else{
                     printf("Aluno nao entrado!\n");
@@ -99,8 +98,8 @@ void menu() {
                 printf("Digite  a matricula do aluno:");
                 scanf("%d", &matricula);
 
-                aluno = alunoMatricula(listaAluno,matricula,&verifica);
-                if(verifica){
+                aluno = alunoMatricula(listaAluno,matricula);
+                if(aluno){
                     printf("Digite o periodo do curso:");
                     scanf("%d", &periodo);
 
@@ -111,8 +110,8 @@ void menu() {
                 printf("Digite  a matricula do aluno:");
                 scanf("%d", &matricula);
 
-                aluno = alunoMatricula(listaAluno,matricula,&verifica);
-                if(verifica){
+                aluno = alunoMatricula(listaAluno,matricula);
+                if(aluno){
                     printf("Digite a o codigo da disicplina:");
                     scanf("%d", &codDisciplina);
                     ArvoreDisciplina* disciplinas = retornaCursoCod(arvoreCurso,aluno->codigoCurso)->disciplina;
@@ -133,8 +132,8 @@ void menu() {
                 printf("Digite  a matricula do aluno:");
                 scanf("%d", &matricula);
 
-                aluno = alunoMatricula(listaAluno,matricula,&verifica);
-                if(verifica){
+                aluno = alunoMatricula(listaAluno,matricula);
+                if(aluno){
                     historicoAluno(arvoreCurso,*aluno);
                 }
                 break;
@@ -156,9 +155,9 @@ void menu() {
 
 int main() {
     
-    // menu();
+    menu();
     
-    // verificaTempoInsercao();
+    verificaTempoInsercao();
     verificaTempoBusca();
 
     getchar();

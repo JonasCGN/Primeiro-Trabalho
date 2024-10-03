@@ -32,6 +32,7 @@ static int ehFolha(ArvoreMatricula *raiz){
 
 static ArvoreMatricula *soUmFilho(ArvoreMatricula *raiz){
     ArvoreMatricula *aux;
+    aux = NULL;
 
     if(raiz->dir == NULL){
         aux = raiz->esq;
@@ -44,12 +45,11 @@ static ArvoreMatricula *soUmFilho(ArvoreMatricula *raiz){
 
 static ArvoreMatricula *menorFilho(ArvoreMatricula *raiz){
     ArvoreMatricula *aux;
-    aux = NULL;
+    aux = raiz;
 
     if(raiz){
-        aux = menorFilho(raiz->esq);
-        if(!aux)
-            aux = raiz;
+        if(raiz->esq)
+            aux = menorFilho(raiz->esq);
     }
 
     return aux;
