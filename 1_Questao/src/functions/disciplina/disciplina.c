@@ -110,11 +110,16 @@ void mostrarDisciplinasCurso(ArvoreCurso *arvoreCurso, int cod){
 int verificaDisciplina(ArvoreDisciplina *arvoreDisciplina, int codDisciplina){
     int exist = 0;
     
-    if(arvoreDisciplina->disciplina.codDisciplina == codDisciplina){
-        exist = 1;
-    }else{
-        exist = verificaDisciplina(arvoreDisciplina->esq,codDisciplina) || verificaDisciplina(arvoreDisciplina->dir,codDisciplina);
+    if(arvoreDisciplina){
+        if(arvoreDisciplina->disciplina.codDisciplina == codDisciplina){
+            exist = 1;
+        }else if(codDisciplina < arvoreDisciplina->disciplina.codDisciplina){
+            exist = verificaDisciplina(arvoreDisciplina->esq,codDisciplina);
+        }else{
+            exist = verificaDisciplina(arvoreDisciplina->dir,codDisciplina);
+        }
     }
+    
 
     return exist;
 }
@@ -154,16 +159,16 @@ void mostrarInfoDisciplina(ArvoreDisciplina *arvoreDisciplina,int codDisciplina)
 
 ArvoreDisciplina* retornaDisciplina(ArvoreDisciplina *arvoreDisciplina, int codDisciplina){
     ArvoreDisciplina* exist;
+    exist = NULL;
 
     if(arvoreDisciplina != NULL){
 
         if(arvoreDisciplina->disciplina.codDisciplina == codDisciplina){
             exist = arvoreDisciplina;
-        }else{
+        }else if(codDisciplina < arvoreDisciplina->disciplina.codDisciplina){
             exist = retornaDisciplina(arvoreDisciplina->esq,codDisciplina);
-            if(exist != NULL){
-                exist = retornaDisciplina(arvoreDisciplina->dir,codDisciplina);
-            }
+        }else{
+            exist = retornaDisciplina(arvoreDisciplina->dir,codDisciplina);
         }
     }
 

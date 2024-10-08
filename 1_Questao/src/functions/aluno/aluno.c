@@ -29,7 +29,11 @@ void cadastrarAluno(ListaAluno **listaAluno, ArvoreCurso *arvoreCurso){
         aluno.nota = NULL;
         aluno.matriculaDisciplina = NULL;
 
-        insereAluno(aluno,listaAluno);     
+        if(insereAluno(aluno,listaAluno)){
+            printf("Aluno matriculado com sucesso!\n");
+        }else{
+            printf("Ja existe um aluno com essa matricula!\n");
+        }
     }
   
 }
@@ -71,15 +75,15 @@ void mostrarDisciplinaAluno(ArvoreCurso *arvoreCurso,Aluno aluno){
         printf("Sem matricula para o aluno");
 }
 
-Aluno* alunoMatricula(ListaAluno *listaAluno, int matricula,int *verifica){
+Aluno* alunoMatricula(ListaAluno *listaAluno, int matricula){
     Aluno* aluno;
+    aluno = NULL;
 
     if(listaAluno != NULL){
         if(listaAluno->aluno.matricula == matricula){
-            *verifica = 1;
             aluno = &(listaAluno->aluno);
         }else{
-            aluno = alunoMatricula(listaAluno->prox,matricula,verifica);
+            aluno = alunoMatricula(listaAluno->prox,matricula);
         }
     }
 

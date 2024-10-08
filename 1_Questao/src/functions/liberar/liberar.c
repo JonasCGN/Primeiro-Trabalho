@@ -36,7 +36,7 @@ void liberarNotas(ArvoreNota *raiz){
 }
 
 void liberarDisciplinas(ArvoreDisciplina *raiz){
-    if (raiz){
+    if(raiz){
         liberarDisciplinas(raiz->esq);
         liberarDisciplinas(raiz->dir);
         free(raiz);

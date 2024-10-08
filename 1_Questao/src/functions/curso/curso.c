@@ -54,11 +54,10 @@ ArvoreCurso *retornaCursoCod(ArvoreCurso *arvoreCurso,int codCurso){
 
         if(arvoreCurso->curso.codCurso == codCurso){
             exist = arvoreCurso;
-        }else{
+        }else if(codCurso < arvoreCurso->curso.codCurso){
             exist = retornaCursoCod(arvoreCurso->esq,codCurso);
-            if(exist != NULL){
-                exist = retornaCursoCod(arvoreCurso->dir,codCurso);
-            }
+        }else{
+            exist = retornaCursoCod(arvoreCurso->dir,codCurso);
         }
     }
 
