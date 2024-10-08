@@ -5,14 +5,14 @@
 
 void cadastrarNota(ArvoreCurso *arvoreCurso,ListaAluno* listaAluno) {
     Aluno* aluno;
-    int matricula,verifica;
+    int matricula;
 
     printf("Digite a matricula do aluno:");
     scanf("%d", &matricula);
 
-    aluno = alunoMatricula(listaAluno,matricula,&verifica);
+    aluno = alunoMatricula(listaAluno,matricula);
     
-    if(verifica){
+    if(aluno){
         Info info;
         ArvoreCurso *curso;
 
@@ -79,13 +79,13 @@ Info* exibirNotaMatricula(ArvoreNota *arvoreNota, int codDisciplina){
     Info* info;
     info = NULL;
 
-    if(arvoreNota != NULL){
+    if(arvoreNota){
         if(codDisciplina == arvoreNota->info.codDisciplina){
             info = &arvoreNota->info;
         }else if(codDisciplina < arvoreNota->info.codDisciplina){
-            exibirNotaMatricula(arvoreNota->esq,codDisciplina);
+            info = exibirNotaMatricula(arvoreNota->esq,codDisciplina);
         }else{
-            exibirNotaMatricula(arvoreNota->dir,codDisciplina);
+            info = exibirNotaMatricula(arvoreNota->dir,codDisciplina);
         }
     }
 

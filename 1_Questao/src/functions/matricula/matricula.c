@@ -58,14 +58,14 @@ void mostrarMatriculas(ArvoreMatricula* raiz){
 void removerMatricula(ListaAluno *listaAluno){
     Aluno* aluno;
 
-    int matricula,codDisciplina,verifica = 0;
+    int matricula,codDisciplina;
 
     printf("Digite a matricula do aluno:");
     scanf("%d", &matricula);
 
-    aluno = alunoMatricula(listaAluno,matricula,&verifica);
+    aluno = alunoMatricula(listaAluno,matricula);
 
-    if(verifica){
+    if(aluno){
         printf("Digite o codigo da disciplina:");
         scanf("%d",&codDisciplina);
 

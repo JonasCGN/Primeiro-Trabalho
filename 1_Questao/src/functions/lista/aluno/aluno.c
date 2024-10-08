@@ -4,27 +4,25 @@
 #include "./aluno.h"
 #include "../../backend/backend.h"
 
-void insereAluno(Aluno aluno,ListaAluno **listaAluno){
-    ListaAluno *novo;
-    novo = (ListaAluno*)malloc(sizeof(ListaAluno));
+int insereAluno(Aluno aluno,ListaAluno **listaAluno){
+    int insere = 1;
 
-    novo->aluno = aluno;
+    if(*listaAluno && aluno.matricula == (*listaAluno)->aluno.matricula)
+        insere = 0;
+    else{
+        if(!(*listaAluno) || comparaString(aluno.nomeAluno, (*listaAluno)->aluno.nomeAluno) < 0){
+            ListaAluno *novo = (ListaAluno *)malloc(sizeof(ListaAluno));
+            
+            novo->aluno = aluno;
+            novo->prox = *listaAluno;
+            
+            *listaAluno = novo;
 
-    if(*listaAluno == NULL || comparaString(novo->aluno.nomeAluno, (*listaAluno)->aluno.nomeAluno) < 0){
-        
-        novo->prox = *listaAluno;
-        *listaAluno = novo;
-
-    }else{
-        ListaAluno *aux = *listaAluno;
-
-        while(aux->prox != NULL && !(comparaString(novo->aluno.nomeAluno, aux->prox->aluno.nomeAluno) < 0)){
-            aux = aux->prox;
+        }else{
+            insere = insereAluno(aluno, &(*listaAluno)->prox);
         }
-
-        novo->prox = aux->prox;
-        aux->prox = novo;
     }
+    return insere;
 }
 
 void exibirInfoAluno(Aluno aluno){
