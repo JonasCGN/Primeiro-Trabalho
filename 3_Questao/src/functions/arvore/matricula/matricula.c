@@ -139,7 +139,6 @@ int removerDisciplinaMatricula(ArvoreMatricula **raiz, int codDisciplina){
                 free(aux);
                 *raiz = NULL;
             }else if((endFilho = soUmFilho(*raiz)) != NULL){
-                aux = *raiz;
                 free(aux);
                 *raiz = endFilho;
             }else {
