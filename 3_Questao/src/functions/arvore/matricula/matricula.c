@@ -71,14 +71,18 @@ void rotacaoEsquerdaMatricula(ArvoreMatricula **raiz){
     *raiz =  aux;
 }
 
+int fbMatricula(ArvoreMatricula *raiz){
+    return alturaArvoreMatricula(raiz->esq) - alturaArvoreMatricula(raiz->dir);
+}
+
 void balanceamentoArvoreMatricula(ArvoreMatricula **raiz){
     ArvoreMatricula *aux;
-    int fb = alturaArvoreMatricula((*raiz)->esq) - alturaArvoreMatricula((*raiz)->dir);
+    int fb = fbMatricula(*raiz);
 
     if(fb >= 2){
         aux = (*raiz)->esq;
 
-        fb = alturaArvoreMatricula(aux->esq) - alturaArvoreMatricula(aux->dir);
+        fb = fbMatricula(aux);
         if(fb < 0){
             rotacaoEsquerdaMatricula(&(*raiz)->esq);
         }
@@ -87,7 +91,7 @@ void balanceamentoArvoreMatricula(ArvoreMatricula **raiz){
     }else if(fb <= -2){
         aux = (*raiz)->dir;
 
-        fb = alturaArvoreMatricula(aux->esq) - alturaArvoreMatricula(aux->dir);
+        fb = fbMatricula(aux);
         if(fb > 0){
             rotacaoDireitaMatricula(&(*raiz)->dir);
         }

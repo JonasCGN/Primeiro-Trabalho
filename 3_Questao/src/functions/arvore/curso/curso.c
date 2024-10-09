@@ -70,14 +70,18 @@ void rotacaoEsquerdaCurso(ArvoreCurso **raiz){
     *raiz =  aux;
 }
 
+int fbCurso(ArvoreCurso *raiz){
+    return alturaArvoreCurso(raiz->esq) - alturaArvoreCurso(raiz->dir);
+}
+
 void balanceamentoArvoreCurso(ArvoreCurso **raiz){
     ArvoreCurso *aux;
-    int fb = alturaArvoreCurso((*raiz)->esq) - alturaArvoreCurso((*raiz)->dir);
+    int fb = fbCurso(*raiz);
 
     if(fb >= 2){
         aux = (*raiz)->esq;
 
-        fb = alturaArvoreCurso((*raiz)->esq) - alturaArvoreCurso((*raiz)->dir);
+        fb = fbCurso(aux);
         if(fb < 0){
             rotacaoEsquerdaCurso(&(*raiz)->esq);
         }
@@ -86,7 +90,7 @@ void balanceamentoArvoreCurso(ArvoreCurso **raiz){
     }else if(fb <= -2){
         aux = (*raiz)->dir;
 
-        fb = alturaArvoreCurso(aux->esq) - alturaArvoreCurso(aux->dir);
+        fb = fbCurso(aux);
         if(fb > 0){
             rotacaoDireitaCurso(&(*raiz)->dir);
         }

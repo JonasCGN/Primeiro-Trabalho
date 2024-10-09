@@ -71,14 +71,18 @@ void rotacaoEsquerdaNota(ArvoreNota **raiz){
     *raiz =  aux;
 }
 
+int fbNota(ArvoreNota *raiz){
+    return alturaArvoreNota(raiz->esq) - alturaArvoreNota(raiz->dir);
+}
+
 void balanceamentoArvoreNota(ArvoreNota **raiz){
     ArvoreNota *aux;
-    int fb = alturaArvoreNota((*raiz)->esq) - alturaArvoreNota((*raiz)->dir);
+    int fb = fbNota(*raiz);
 
     if(fb >= 2){
         aux = (*raiz)->esq;
 
-        fb = alturaArvoreNota((*raiz)->esq) - alturaArvoreNota((*raiz)->dir);
+        fb = fbNota(aux);
         if(fb < 0){
             rotacaoEsquerdaNota(&(*raiz)->esq);
         }
@@ -87,7 +91,7 @@ void balanceamentoArvoreNota(ArvoreNota **raiz){
     }else if(fb <= -2){
         aux = (*raiz)->dir;
 
-        fb = alturaArvoreNota(aux->esq) - alturaArvoreNota(aux->dir);
+        fb = fbNota(aux);
         if(fb > 0){
             rotacaoDireitaNota(&(*raiz)->dir);
         }
