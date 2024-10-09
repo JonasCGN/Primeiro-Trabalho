@@ -70,14 +70,18 @@ void rotacaoEsquerdaDisciplina(ArvoreDisciplina **raiz){
     *raiz =  aux;
 }
 
+int fbDisciplina(ArvoreDisciplina *raiz){
+    return alturaArvoreDisciplina(raiz->esq) - alturaArvoreDisciplina(raiz->dir);
+}
+
 void balanceamentoArvoreDisciplina(ArvoreDisciplina **raiz){
     ArvoreDisciplina *aux;
-    int fb = alturaArvoreDisciplina((*raiz)->esq) - alturaArvoreDisciplina((*raiz)->dir);
+    int fb = fbDisciplina(*raiz);
 
     if(fb >= 2){
         aux = (*raiz)->esq;
 
-        fb = alturaArvoreDisciplina(aux->esq) - alturaArvoreDisciplina(aux->dir);
+        fb = fbDisciplina(aux);
         if(fb < 0){
             rotacaoEsquerdaDisciplina(&(*raiz)->esq);
         }
@@ -86,7 +90,7 @@ void balanceamentoArvoreDisciplina(ArvoreDisciplina **raiz){
     }else if(fb <= -2){
         aux = (*raiz)->dir;
 
-        fb = alturaArvoreDisciplina(aux->esq) - alturaArvoreDisciplina(aux->dir);
+        fb = fbDisciplina(aux);
         if(fb > 0){
             rotacaoDireitaDisciplina(&(*raiz)->dir);
         }
