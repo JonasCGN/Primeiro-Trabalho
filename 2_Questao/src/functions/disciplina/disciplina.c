@@ -71,11 +71,16 @@ void removerDisciplinaCurso(ArvoreCurso *arvoreCurso,ListaAluno *listaAluno){
         if(verificaMatriculadoDisciplina(listaAluno, codDisciplina)){
             printf("Nao pode remover essa disciplina pois tem aluno matriculada na mesma!\n");
         }else{
-            if(removerDisciplina(&(curso->disciplina),codDisciplina)){
-                printf("Disciplina removido com sucesso!\n");
+            if(verificaDisciplinaNotaAlunos(listaAluno,codDisciplina)){
+                printf("Nao pode remover essa disciplina pois tem aluno que cursou na mesma!\n");
             }else{
-                printf("Disciplina nao encontrado!\n");
+                if(removerDisciplina(&(curso->disciplina),codDisciplina)){
+                    printf("Disciplina removido com sucesso!\n");
+                }else{
+                    printf("Disciplina nao encontrado!\n");
+                }
             }
+            
         }
     }
 }

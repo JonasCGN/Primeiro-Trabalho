@@ -106,6 +106,20 @@ int verificaDisciplinaNota(ArvoreNota *arvoreNota, int codDisciplina){
     return exist;
 }
 
+int verificaDisciplinaNotaAlunos(ListaAluno *listaAluno, int codDisciplina){
+    int existe = 0;
+
+    if(listaAluno != NULL){
+        if(!existe){
+            existe = verificaDisciplinaNota(listaAluno->aluno.nota,codDisciplina);
+        }else{
+            existe = verificaDisciplinaNotaAlunos(listaAluno->prox,codDisciplina);
+        }
+    }
+
+    return existe;
+}
+
 void exibirNotaInfoDisciplina(ArvoreDisciplina *arvoreDisciplina,ArvoreNota *arvoreNota, int codDisciplina){
     Info* info;
     if( (info = exibirNotaMatricula(arvoreNota,codDisciplina))){

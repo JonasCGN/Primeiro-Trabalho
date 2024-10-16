@@ -18,3 +18,5 @@ void exibirNotaInfoDisciplina(ArvoreDisciplina *arvoreDisciplina,ArvoreNota *arv
 void exibirNotasPeriodo(ArvoreNota *arvoreNota,int periodo);
 //Verifica se uma disciplina esta na arvore de nota
 int verificaDisciplinaNota(ArvoreNota *arvoreNota, int codDisciplina);
+//Verifica se uma disciplina esta na arvore de nota de algum aluno
+int verificaDisciplinaNotaAlunos(ListaAluno *listaAluno, int codDisciplina);

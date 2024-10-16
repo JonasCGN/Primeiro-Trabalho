@@ -64,15 +64,16 @@ static void vetIntAleatorioSemRepeticaoCurso(Curso **vetor){
         int num = rand() % (QTDINSERCAO * 2);
         int j = 0;
 
-        int isRepetido = 0;
-        for (j = 0; j < i && !isRepetido; j++)
-        if ((*vetor)[j].codCurso == num)
-            isRepetido = 1;
+        int numRepetido = 0;
 
-        if (!isRepetido)
-        (*vetor)[i].codCurso = num;
+        for (j = 0; j < i && !numRepetido; j++)
+            if ((*vetor)[j].codCurso == num)
+                numRepetido = 1;
+
+        if (!numRepetido)
+            (*vetor)[i].codCurso = num;
         else
-        i--;
+            i--;
     }
 }
 
@@ -239,7 +240,7 @@ static double verificaAleatorioNota(ArvoreNota *arvoreTeste,ArvoreDisciplina *ar
 
     liberarNotas(arvoreTeste);
     liberarDisciplinas(arvoreDisciplina);
-
+    
     return tempo_total;
 }
 
