@@ -9,3 +9,5 @@ int alturaArvoreCurso(ArvoreCurso *raiz);
 void rotacaoDireitaCurso(ArvoreCurso **raiz);
 void rotacaoEsquerdaCurso(ArvoreCurso **raiz);
 void balanceamentoArvoreCurso(ArvoreCurso **raiz);
+
+int removerCurso(ArvoreCurso **raiz, int codCurso);

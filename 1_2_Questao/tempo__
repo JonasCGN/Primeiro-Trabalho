@@ -18,44 +18,34 @@ static void limpaCurso(ArvoreCurso *raiz){
     }
 }
 
-static double verificaCrescenteCurso(ArvoreCurso *arvoreTeste, Curso *curso){
+static double verificaCrescenteCurso(ArvoreCurso *arvoreTeste, Curso curso){
     clock_t inicio, fim;
     double tempo_gasto,tempo_total=0;
 
+    inicio = clock();
+    inserirCurso(&arvoreTeste,curso);
+    fim = clock();
 
-    for(int i=0;i < QTDINSERCAO;i++){
-        inicio = clock();
+    removerCurso(&arvoreTeste,curso.codCurso);
     
-        inserirCurso(&arvoreTeste,curso[i]);
-    
-        fim = clock();
-        
-        tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
-        tempo_total += tempo_gasto;
+    tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
+    tempo_total += tempo_gasto;
 
-    }
-
-    limpaCurso(arvoreTeste);
     return tempo_total;
 }
 
-static double verificaDecrescenteCurso(ArvoreCurso *arvoreTeste, Curso *curso){
+static double verificaDecrescenteCurso(ArvoreCurso *arvoreTeste, Curso curso){
     clock_t inicio, fim;
     double tempo_gasto,tempo_total=0;
 
-    for(int i = QTDINSERCAO - 1;0 <= i;i--){
-        inicio = clock();
+    inicio = clock();
+    inserirCurso(&arvoreTeste,curso);
+    fim = clock();
+    
+    removerCurso(&arvoreTeste,curso.codCurso);
+    tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
+    tempo_total += tempo_gasto;
 
-        inserirCurso(&arvoreTeste,curso[i]);
-
-        fim = clock();
-
-        tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
-        tempo_total += tempo_gasto;
-
-    }
-
-    limpaCurso(arvoreTeste);
     return tempo_total;
 }
 
@@ -76,24 +66,28 @@ static void vetIntAleatorioSemRepeticaoCurso(Curso **vetor){
     }
 }
 
-static double verificaAleatorioCurso(ArvoreCurso *arvoreTeste, Curso *curso){
+static double verificaAleatorioCurso(ArvoreCurso *arvoreTeste, Curso curso){
     clock_t inicio, fim;
     double tempo_gasto,tempo_total=0;
 
-    vetIntAleatorioSemRepeticaoCurso(&curso);
+    inicio = clock();
+    inserirCurso(&arvoreTeste,curso);
+    fim = clock();
 
-    for(int i = 0;i < QTDINSERCAO;i++){
-        inicio = clock();
-        inserirCurso(&arvoreTeste,curso[i]);
-        fim = clock();
+    removerCurso(&arvoreTeste,curso.codCurso);
 
-        tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
-        tempo_total += tempo_gasto;
-    }
-
-    limpaCurso(arvoreTeste);
+    tempo_gasto = (double)(fim - inicio) / CLOCKS_PER_SEC;
+    tempo_total += tempo_gasto;
 
     return tempo_total;
+}
+
+static void insereElementosCurso(ArvoreCurso **arvoreTeste,Curso *curso){
+    limpaCurso(*arvoreTeste);
+
+    for(int i=0;i < QTDINSERCAO;i++){
+        inserirCurso(arvoreTeste,curso[i]);
+    }
 }
 
 void verificaTempoInsercao(){
@@ -110,9 +104,14 @@ void verificaTempoInsercao(){
         curso[i].codCurso = i + 1;
     }
 
+    Curso cursoTeste;
+    cursoTeste.codCurso = 1001;
+
+    insereElementosCurso(&arvoreTeste,curso);
+
     printf("Teste de insercao crescente\n");
     for(int i=0;i < TESTE;i++){
-        tempo_gasto = verificaCrescenteCurso(arvoreTeste,curso);
+        tempo_gasto = verificaCrescenteCurso(arvoreTeste,cursoTeste);
         // printf("Duracao do %d teste: %lf\n",i+1,tempo_gasto);
         tempo_total += tempo_gasto;
     }
@@ -121,9 +120,16 @@ void verificaTempoInsercao(){
     
     tempo_total = 0;
 
+    for(int i = QTDINSERCAO - 1,j=0;0 <= i; i--,j++){
+        curso[i].codCurso = j + 1;
+    }
+
+    cursoTeste.codCurso = 0;
+    insereElementosCurso(&arvoreTeste,curso);
+
     printf("Teste de insercao decrescente\n");
     for(int i=0;i < TESTE;i++){
-        tempo_gasto = verificaDecrescenteCurso(arvoreTeste,curso);
+        tempo_gasto = verificaDecrescenteCurso(arvoreTeste,cursoTeste);
         // printf("Duracao do %d teste: %lf\n",i+1,tempo_gasto);
         tempo_total += tempo_gasto;
     }
@@ -132,17 +138,20 @@ void verificaTempoInsercao(){
 
     tempo_total = 0;
 
+    vetIntAleatorioSemRepeticaoCurso(&curso);
+    insereElementosCurso(&arvoreTeste,curso);
+
     printf("Teste de insercao aleatoria\n");
     for(int i=0;i < TESTE;i++){
-        tempo_gasto = verificaAleatorioCurso(arvoreTeste,curso);
+        tempo_gasto = verificaAleatorioCurso(arvoreTeste,cursoTeste);
         // printf("Duracao do %d teste: %lf\n",i+1,tempo_gasto);
         tempo_total += tempo_gasto;
     }
     printf("A duracao total foi de: %lf\n",  tempo_total);
     printf("A media foi de: %lf\n",  tempo_total / TESTE);
 
-    free(curso);
     liberarCursos(arvoreTeste);
+    free(curso);
 }
 
 static double verificaCrescenteNota(ArvoreNota *arvoreTeste, ArvoreDisciplina *arvoreDisciplina,Info *info,Disciplina *disciplina){

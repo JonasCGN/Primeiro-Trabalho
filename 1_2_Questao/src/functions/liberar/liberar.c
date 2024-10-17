@@ -16,6 +16,7 @@ void liberarAlunos(ListaAluno *listaAluno){
         liberarMatriculas(listaAluno->aluno.matriculaDisciplina);
         liberarNotas(listaAluno->aluno.nota);
         free(listaAluno);
+        listaAluno = NULL;
     }
 }
 
@@ -24,6 +25,7 @@ void liberarMatriculas(ArvoreMatricula *raiz){
         liberarMatriculas(raiz->esq);
         liberarMatriculas(raiz->dir);
         free(raiz);
+        raiz = NULL;
     }
 }
 
@@ -32,6 +34,7 @@ void liberarNotas(ArvoreNota *raiz){
         liberarNotas(raiz->esq);
         liberarNotas(raiz->dir);
         free(raiz);
+        raiz = NULL;
     }
 }
 
@@ -40,6 +43,7 @@ void liberarDisciplinas(ArvoreDisciplina *raiz){
         liberarDisciplinas(raiz->esq);
         liberarDisciplinas(raiz->dir);
         free(raiz);
+        raiz = NULL;
     }
 }
 
@@ -48,6 +52,8 @@ static void liberaCurso(ArvoreCurso *raiz){
         liberarDisciplinas(raiz->disciplina);
 
     free(raiz);
+    raiz = NULL;
+
 }
 
 void liberarCursos(ArvoreCurso *raiz){
@@ -55,5 +61,6 @@ void liberarCursos(ArvoreCurso *raiz){
         liberarCursos(raiz->esq);
         liberarCursos(raiz->dir);
         liberaCurso(raiz);
+        raiz = NULL;
     }
 }
