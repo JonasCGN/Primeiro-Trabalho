@@ -23,12 +23,11 @@ int inserirMatricula(ArvoreMatricula **raiz, int codDisciplina){
         }else{
             insere = 0;
         }
-    }
-
-    if(insere){
+        
         (*raiz)->altura = alturaArvoreMatricula(*raiz);
         balanceamentoArvoreMatricula(raiz);
     }
+
 
     return insere;
 }
@@ -156,12 +155,13 @@ int removerDisciplinaMatricula(ArvoreMatricula **raiz, int codDisciplina){
             existe = removerDisciplinaMatricula(&(*raiz)->esq, codDisciplina);
         else
             existe = removerDisciplinaMatricula(&(*raiz)->dir, codDisciplina);
+
+        if(*raiz){
+            (*raiz)->altura = alturaArvoreMatricula(*raiz);
+            balanceamentoArvoreMatricula(raiz);
+        }
     }
 
-    if(existe){
-        (*raiz)->altura = alturaArvoreMatricula(*raiz);
-        balanceamentoArvoreMatricula(raiz);
-    }
 
     return existe;
 }

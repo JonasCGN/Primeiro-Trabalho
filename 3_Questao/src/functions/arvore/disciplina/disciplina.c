@@ -22,9 +22,7 @@ int inserirDisciplina(ArvoreDisciplina **raiz, Disciplina disciplina){
         }else{
             insere = 0;
         }
-    }
-
-    if(insere){
+        
         (*raiz)->altura = alturaArvoreDisciplina(*raiz);
         balanceamentoArvoreDisciplina(raiz);
     }
@@ -155,12 +153,13 @@ int removerDisciplina(ArvoreDisciplina **raiz, int codDisciplina){
             existe = removerDisciplina(&(*raiz)->esq, codDisciplina);
         else
             existe = removerDisciplina(&(*raiz)->dir, codDisciplina);
+        
+        if(*raiz){
+            (*raiz)->altura = alturaArvoreDisciplina(*raiz);
+            balanceamentoArvoreDisciplina(raiz);
+        }
     }
 
-    if(existe){
-        (*raiz)->altura = alturaArvoreDisciplina(*raiz);
-        balanceamentoArvoreDisciplina(raiz);
-    }
 
     return existe;
 }

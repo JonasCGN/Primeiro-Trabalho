@@ -18,7 +18,7 @@ int inserirMatricula(ArvoreMatricula** raiz, int codDisciplina) {
         if (codDisciplina < (*raiz)->codDisciplina)
             insere = inserirMatricula(&((*raiz)->esq), codDisciplina);
         else if (codDisciplina > (*raiz)->codDisciplina)
-            inserirMatricula(&((*raiz)->dir), codDisciplina);
+            insere = inserirMatricula(&((*raiz)->dir), codDisciplina);
         else
             insere = 0;
     }

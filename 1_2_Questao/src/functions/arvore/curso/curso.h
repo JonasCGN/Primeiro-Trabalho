@@ -4,3 +4,4 @@
 
 //Vai inserir um curso na arvore de curso
 int inserirCurso(ArvoreCurso **arvoreCurso, Curso curso);
+//Remove um curso da arvore do curso
