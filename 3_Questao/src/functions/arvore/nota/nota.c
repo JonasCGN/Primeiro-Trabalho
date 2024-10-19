@@ -23,12 +23,11 @@ int inserirNota(ArvoreNota **raiz, Info info){
         }else{
             insere = 0;
         }
-    }
-
-    if(insere){
+        
         (*raiz)->altura = alturaArvoreNota(*raiz);
         balanceamentoArvoreNota(raiz);
     }
+
 
     return insere;
 }

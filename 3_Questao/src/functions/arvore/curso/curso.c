@@ -22,12 +22,11 @@ int inserirCurso(ArvoreCurso **raiz, Curso curso){
         }else{
             insere = 0;
         }
-    }
-
-    if(insere){
+        
         (*raiz)->altura = alturaArvoreCurso(*raiz);
         balanceamentoArvoreCurso(raiz);
     }
+
 
     return insere;
 }
@@ -97,4 +96,71 @@ void balanceamentoArvoreCurso(ArvoreCurso **raiz){
 
         rotacaoEsquerdaCurso(raiz);
     }
+}
+
+static int ehFolha(ArvoreCurso *raiz){
+    return (raiz->esq == NULL && raiz->dir == NULL);
+}
+
+static ArvoreCurso *soUmFilho(ArvoreCurso *raiz){
+    ArvoreCurso *aux;
+    aux = NULL;
+    
+    if(raiz->dir == NULL){
+        aux = raiz->esq;
+    }else if(raiz->esq == NULL){
+        aux = raiz->dir;
+    }
+
+    return aux;
+}
+
+static ArvoreCurso *menorFilho(ArvoreCurso *raiz){
+    ArvoreCurso *aux;
+    aux = raiz;
+
+    if(raiz){
+        if(raiz->esq)
+            aux = menorFilho(raiz->esq);
+    }
+
+    return aux;
+}
+
+int removerCurso(ArvoreCurso **raiz, int codCurso){
+    ArvoreCurso *endFilho;
+    int existe = 0;
+
+    if((*raiz)){
+
+        if(codCurso == (*raiz)->curso.codCurso){
+            existe = 1;
+
+            ArvoreCurso *aux = *raiz;
+            if(ehFolha(*raiz)){
+                free(aux);
+                *raiz = NULL;
+            }else if((endFilho = soUmFilho(*raiz)) != NULL){
+                free(aux);
+                *raiz = endFilho;
+            }else {
+                endFilho = menorFilho((*raiz)->dir);
+                
+                (*raiz)->disciplina = endFilho->disciplina;
+
+                removerCurso(&(*raiz)->dir,endFilho->curso.codCurso);
+            }
+        }else if(codCurso < (*raiz)->curso.codCurso)
+            existe = removerCurso(&(*raiz)->esq, codCurso);
+        else
+            existe = removerCurso(&(*raiz)->dir, codCurso);
+        
+        if(*raiz){
+            (*raiz)->altura = alturaArvoreCurso(*raiz);
+            balanceamentoArvoreCurso(raiz);
+        }
+    }
+
+
+    return existe;
 }
