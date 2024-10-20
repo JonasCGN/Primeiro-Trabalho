@@ -3,7 +3,7 @@
 
 #include "./nota.h"
 
-//Flavio
+
 int inserirNota(ArvoreNota **raiz, Info info){
     int insere = 1;
     

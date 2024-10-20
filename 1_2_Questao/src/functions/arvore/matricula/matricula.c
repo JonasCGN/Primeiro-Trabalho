@@ -3,7 +3,7 @@
 
 #include "./matricula.h"
 
-/*Tudo foi flávio*/
+
 int inserirMatricula(ArvoreMatricula** raiz, int codDisciplina) {
     int insere = 1;
 
