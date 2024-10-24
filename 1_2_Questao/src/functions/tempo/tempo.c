@@ -113,6 +113,7 @@ void verificaTempoInsercao(){
     printf("Teste de insercao crescente\n");
     for(int i=0;i < TESTE;i++){
         tempo_gasto = verificaCrescenteCurso(arvoreTeste,curso);
+        printf("%lf, ", tempo_gasto);
         // printf("Duracao do %d teste: %lf\n",i+1,tempo_gasto);
         tempo_total += tempo_gasto;
     }
@@ -124,6 +125,7 @@ void verificaTempoInsercao(){
     printf("Teste de insercao decrescente\n");
     for(int i=0;i < TESTE;i++){
         tempo_gasto = verificaDecrescenteCurso(arvoreTeste,curso);
+        printf("%lf, ", tempo_gasto);
         // printf("Duracao do %d teste: %lf\n",i+1,tempo_gasto);
         tempo_total += tempo_gasto;
     }
@@ -135,6 +137,7 @@ void verificaTempoInsercao(){
     printf("Teste de insercao aleatoria\n");
     for(int i=0;i < TESTE;i++){
         tempo_gasto = verificaAleatorioCurso(arvoreTeste,curso);
+        printf("%lf, ", tempo_gasto);
         // printf("Duracao do %d teste: %lf\n",i+1,tempo_gasto);
         tempo_total += tempo_gasto;
     }
@@ -266,6 +269,7 @@ void verificaTempoBusca(){
     printf("Teste de busca crescente\n");
     for(int i=0;i < TESTE;i++){
         tempo_gasto = verificaCrescenteNota(arvoreTeste,arvoreDisciplina,info,disciplina);
+        printf("%lf, ", tempo_gasto);
         // printf("Duracao do %d teste: %lf\n",i+1,tempo_gasto);
         tempo_total += tempo_gasto;
     }
@@ -277,6 +281,7 @@ void verificaTempoBusca(){
     printf("Teste de busca decrescente\n");
     for(int i=0;i < TESTE;i++){
         tempo_gasto = verificaDecrescenteNota(arvoreTeste,arvoreDisciplina,info,disciplina);
+        printf("%lf, ", tempo_gasto);
         // printf("Duracao do %d teste: %lf\n",i+1,tempo_gasto);
         tempo_total += tempo_gasto;
     }
@@ -288,6 +293,7 @@ void verificaTempoBusca(){
     printf("Teste de busca aleatoria\n");
     for(int i=0;i < TESTE;i++){
         tempo_gasto = verificaAleatorioNota(arvoreTeste,arvoreDisciplina,info,disciplina);
+        printf("%lf, ", tempo_gasto);
         // printf("Duracao do %d teste: %lf\n",i+1,tempo_gasto);
         tempo_total += tempo_gasto;
     }
